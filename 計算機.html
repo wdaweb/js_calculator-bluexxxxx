@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      background: url(./27106303.jpg)  no-repeat center / cover ;
+    }
+    table{
+      border: 5px solid black;
+      background: rgba(255, 255, 255, 0.6);
+      box-shadow:4px 4px 3px rgba(20%,20%,40%,0.5);
+box-shadow:2px 2px 1px rgba(20%,20%,40%,0.5) inset;
+box-shadow:2px 2px 2px rgba(20%,20%,40%,0.6),4px 4px 6px rgba(20%,20%,40%,0.4),6px 6px 12px rgba(20%,20%,40%,0.4);
+    }
+    
+    td {
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 2rem;
+      color: blue;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      border: 5px solid black;
+    }
+
+    td:hover{
+      background: orange;
+      color: white;
+      cursor: pointer;
+      transition: 0.6s;
+    }
+
+    #input{
+      color:tomato;
+    }
+    #input:hover{
+      background: blue;
+      color: black;
+      cursor: default;
+    }
+
+    .sign{
+      color: red;
+    }
+
+    .clear{
+      color: firebrick;
+    }
+
+  </style>
+</head>
+<body>
+  <table align="center" width="500px" height="600px" border="1" >
+    <tr>
+      <td colspan="4" id="input">0</td>
+    </tr>
+    <tr>
+      <td class="clear">C</td>
+      <td class="sign">/</td>
+      <td class="sign">*</td>
+      <td class="sign">-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>8</td>
+      <td>9</td>
+      <td rowspan="2" class="sign">+</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td rowspan="2" class="sign">=</td>
+    </tr>
+    <tr>
+      <td colspan="2">0</td>
+      <td class="sign">.</td>
+    </tr>
+  </table>
+
+  <script>
+    const input = document.getElementById('input')
+    // id=input以外的所有td
+    const tds = document.querySelectorAll('td:not(#input)')
+
+    for (const td of tds) {
+      td.onclick = () => {
+        const text = td.innerText
+        if (text === '=') {
+          // 執行算式
+          input.innerText = eval(input.innerText)
+        } else if (text === 'C') {
+          // 重設
+          input.innerText = '0'
+        } else {
+          // 一般按鍵
+          if (input.innerText === '0') {
+            input.innerText = text
+          } else {
+            input.innerText += text
+          }
+        }
+      }
+    }
+
+    document.onkeydown = event => {
+      if (event.key === 'Enter') {
+        input.innerText = eval(input.innerText)
+      } else if (
+        !isNaN(parseInt(event.key)) ||
+        event.key === '+' ||
+        event.key === '-' ||
+        event.key === '*' ||
+        event.key === '/' ||
+        event.key === '.'
+      ) {
+        if (input.innerText === '0') {
+          input.innerText = event.key
+        } else {
+          input.innerText += event.key
+        }
+      }
+    }
+  </script>
+</body>
+</html>
